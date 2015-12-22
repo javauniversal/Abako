@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Activities.ActLoginNegocio"
+    tools:showIn="@layout/layout_actmain">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_alignParentTop="true">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:id="@+id/imageView"
+                android:src="@drawable/logo_abako"
+                android:layout_gravity="center_horizontal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/negocio"
+                android:text=""
+                android:textCursorDrawable="@drawable/text_cursor_cyan"
+                android:textSize="16sp"
+                app:met_baseColor="@android:color/black"
+                app:met_floatingLabel="highlight"
+                android:id="@+id/codeNegocio"
+                app:met_maxCharacters="10"
+                app:met_primaryColor="@color/colorPrimary"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:text=""
+                android:textCursorDrawable="@drawable/text_cursor_cyan"
+                android:textSize="16sp"
+                app:met_baseColor="@android:color/black"
+                app:met_floatingLabel="highlight"
+                android:id="@+id/password"
+                app:met_maxCharacters="10"
+                app:met_primaryColor="@color/colorPrimary"
+                app:met_singleLineEllipsis="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Configurar"
+                android:id="@+id/btnConfigurar"
+                android:layout_marginTop="15dp"
+                android:textSize="16sp"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

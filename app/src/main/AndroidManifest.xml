@@ -41,6 +41,10 @@
             android:label="@string/app_name"
             android:theme="@style/NoHeaderLight"/>
 
+        <activity
+            android:name=".Activities.Settings"
+            android:label="@string/title_activity_act_menu"></activity>
+
     </application>
 
 </manifest>

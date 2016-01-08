@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+    <include layout="@layout/app_bar_layout" />
+
     <include layout="@layout/content_act_logon_usuario" />
 
 </android.support.design.widget.CoordinatorLayout>

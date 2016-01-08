@@ -5,7 +5,7 @@ import java.util.List;
 
 public class EntMenu {
 
-    public String imageView;
+    public int imageView;
     public String modulo;
     public String descripcion;
     public String presio;
@@ -13,7 +13,7 @@ public class EntMenu {
     public String vistoBueno;
     public static List<EntMenu> entMenuStatic;
 
-    public EntMenu(String imageView, String modulo, String descripcion, String usuario, String vistoBueno, String presio) {
+    public EntMenu(int imageView, String modulo, String descripcion, String usuario, String vistoBueno, String presio) {
         this.imageView = imageView;
         this.modulo = modulo;
         this.descripcion = descripcion;
@@ -23,11 +23,11 @@ public class EntMenu {
     }
 
 
-    public String getImageView() {
+    public int getImageView() {
         return imageView;
     }
 
-    public void setImageView(String imageView) {
+    public void setImageView(int imageView) {
         this.imageView = imageView;
     }
 

@@ -32,12 +32,31 @@
     </style>
 
     <!-- No Drawer Header -->
-    <style name="NoHeaderLight" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar">
+    <style name="NoHeaderLight" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar12">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorButtonNormal">@color/colorPrimary</item>
+
     </style>
+
+    <style name="MaterialNavigationDrawerTheme.Light.DarkActionBar12" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="popupTheme">@style/Base.V21.Theme.AppCompat.Light.Dialog</item>
+        <item name="drawerType">@integer/DRAWERTYPE_ACCOUNTS</item>
+        <item name="drawerColor">#ffeeeeee</item>
+        <item name="rippleBackport">false</item>
+        <item name="uniqueToolbarColor">false</item>
+        <item name="singleAccount">false</item>
+        <item name="sectionStyle">@style/MaterialSectionTheme.Light</item>
+        <item name="subheaderStyle">@style/MaterialSubheaderTheme.Light</item>
+        <item name="accountStyle">@style/MaterialAccountTheme</item>
+        <item name="multipaneSupport">false</item>
+        <item name="defaultSectionLoaded">0</item>
+        <item name="learningPattern">true</item>
+        <item name="toolbarElevation">false</item>
+
+    </style>
+
 
 
 

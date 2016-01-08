@@ -3,20 +3,17 @@ package co.dito.abako.abako.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
 import co.dito.abako.abako.Activities.Accounts;
@@ -65,7 +62,7 @@ public class AdapterRecyclerMenu extends RecyclerView.Adapter<MenuInterface> {
     public void onBindViewHolder(MenuInterface holder, final int position) {
 
         EntMenu items = getEntMenuStatic().get(position);
-        loadeImagenView(items, holder.imageView);
+        holder.imageView.setImageResource(items.getImageView());
         holder.modulo.setText(items.getModulo());
         holder.descripcion.setText(items.getDescripcion());
         holder.usuario.setText(items.getUsuario());
@@ -127,36 +124,4 @@ public class AdapterRecyclerMenu extends RecyclerView.Adapter<MenuInterface> {
         }
     }
 
-    public void loadeImagenView(EntMenu data, ImageView img){
-
-        ImageLoadingListener listener = new ImageLoadingListener(){
-            @Override
-            public void onLoadingStarted(String arg0, View arg1) {
-                // TODO Auto-generated method stub
-                //Inicia metodo
-                //holder.progressBar.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onLoadingCancelled(String arg0, View arg1) {
-                // TODO Auto-generated method stub
-                //Cancelar
-                //holder.progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
-                //Completado
-                //holder.progressBar.setVisibility(View.GONE);
-            }
-            @Override
-            public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
-                // TODO Auto-generated method stub
-                //Error al cargar la imagen.
-                //holder.progressBar.setVisibility(View.GONE);
-            }
-        };
-
-        imageLoader1.displayImage(data.getImageView(), img, options1, listener);
-    }
 }

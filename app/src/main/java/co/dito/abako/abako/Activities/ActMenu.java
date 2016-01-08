@@ -6,8 +6,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import co.dito.abako.abako.Adapters.AdapterRecyclerMenu;
+import co.dito.abako.abako.Entities.EntMenu;
 import co.dito.abako.abako.R;
+
+import static co.dito.abako.abako.Entities.EntMenu.setEntMenuStatic;
 
 public class ActMenu extends AppCompatActivity {
 
@@ -29,18 +35,21 @@ public class ActMenu extends AppCompatActivity {
         RecyclerView.LayoutManager lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
 
-        adapter = new AdapterRecyclerMenu(this);
+        //Llamar servicio de usuario
+        List<EntMenu> menuList = new ArrayList<EntMenu>();
+
+        menuList.add(new EntMenu(R.drawable.icono1,"Pedidos","Crea tus órdenes de pedidos","40", "10", "$ 100.000"));
+        menuList.add(new EntMenu(R.drawable.icono2,"Facturación","Genera factura de venta","50", "8", "$ 200.000"));
+        menuList.add(new EntMenu(R.drawable.icono3,"Notas Credito","Tramita tu devolución","70", "14", "$ 200.000"));
+        menuList.add(new EntMenu(R.drawable.icono4,"Cartera","Gestion de cuentas por cobrar","10", "19", "$ 200.000"));
+        menuList.add(new EntMenu(R.drawable.icono5,"Entregas","Controla tus pedidos","30","10", "$ 400.000"));
+        menuList.add(new EntMenu(R.drawable.icono6,"Proveedores","Administrar tu cliente","78","11", "$ 100.000"));
+
+        setEntMenuStatic(menuList);
+
+
+        adapter = new AdapterRecyclerMenu(ActMenu.this);
         recycler.setAdapter(adapter);
-        /*recycler.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-                startActivity(new Intent(ActMenu.this, Accounts.class));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                finish();
-            }
-
-        }));*/
 
     }
 

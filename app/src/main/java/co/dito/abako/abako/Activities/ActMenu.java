@@ -31,6 +31,16 @@ public class ActMenu extends AppCompatActivity {
 
         adapter = new AdapterRecyclerMenu(this);
         recycler.setAdapter(adapter);
+        /*recycler.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                startActivity(new Intent(ActMenu.this, Accounts.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            }
+
+        }));*/
 
     }
 

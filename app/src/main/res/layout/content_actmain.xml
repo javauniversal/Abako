@@ -20,8 +20,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_alignParentTop="true">
+            android:layout_marginTop="50dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -61,8 +60,9 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Configurar"
+                android:text="@string/configurar"
                 android:id="@+id/btnConfigurar"
+                android:textColor="@color/colorBlanco"
                 android:layout_marginTop="15dp"
                 android:textSize="16sp"
                 android:layout_gravity="center_horizontal" />

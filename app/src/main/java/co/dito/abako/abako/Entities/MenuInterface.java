@@ -11,6 +11,7 @@ import co.dito.abako.abako.R;
 public class MenuInterface extends RecyclerView.ViewHolder {
 
     public ImageView imageView;
+    public ImageView item_menu;
     public TextView modulo;
     public TextView descripcion;
     public TextView presio;
@@ -26,6 +27,7 @@ public class MenuInterface extends RecyclerView.ViewHolder {
         this.vistobueno = (TextView) itemView.findViewById(R.id.txtVistoBueno);
         this.presio = (TextView) itemView.findViewById(R.id.txtValor);
         this.imageView = (ImageView) itemView.findViewById(R.id.imgModule);
+        this.item_menu = (ImageView) itemView.findViewById(R.id.item_menu);
 
     }
 }

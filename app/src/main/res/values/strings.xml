@@ -11,4 +11,8 @@
     <string name="_56">5655</string>
     <string name="title_activity_act_menu">Menú</string>
     <string name="usuario">Usuario</string>
+    <string name="install">Install</string>
+    <string name="add_to_wishlist">Add to wishlist</string>
+    <string name="configurar">Configurar</string>
+    <string name="_10">10</string>
 </resources>

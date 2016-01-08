@@ -20,20 +20,20 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_alignParentTop="true">
+            android:layout_marginTop="50dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:id="@+id/imageView"
                 android:src="@drawable/logo_abako"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Usuario"
+                android:hint="@string/usuario"
                 android:textCursorDrawable="@drawable/text_cursor_cyan"
                 android:textSize="16sp"
                 app:met_baseColor="@android:color/black"
@@ -61,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ingresar"
                 android:id="@+id/btnIngresar"
+                android:textColor="@color/colorBlanco"
                 android:layout_marginTop="15dp"
                 android:textSize="16sp"
                 android:layout_gravity="center_horizontal" />

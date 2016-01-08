@@ -1,13 +1,12 @@
 <resources>
-
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorButtonNormal">@color/colorPrimary</item>
-        <item name="android:textColor">@color/colorBlanco</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -23,6 +22,7 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">17sp</item>
+
     </style>
 
     <style name="CustomTextViewDescrip" parent="@android:style/TextAppearance.Widget.TextView">
@@ -30,6 +30,15 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">11sp</item>
     </style>
+
+    <!-- No Drawer Header -->
+    <style name="NoHeaderLight" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+    </style>
+
 
 
 </resources>

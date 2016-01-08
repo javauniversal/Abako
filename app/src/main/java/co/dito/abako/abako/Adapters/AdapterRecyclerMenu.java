@@ -2,12 +2,16 @@ package co.dito.abako.abako.Adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -15,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
+import co.dito.abako.abako.Activities.Accounts;
 import co.dito.abako.abako.Entities.EntMenu;
 import co.dito.abako.abako.Entities.MenuInterface;
 import co.dito.abako.abako.R;
@@ -59,8 +64,6 @@ public class AdapterRecyclerMenu extends RecyclerView.Adapter<MenuInterface> {
     @Override
     public void onBindViewHolder(MenuInterface holder, final int position) {
 
-
-
         EntMenu items = getEntMenuStatic().get(position);
         loadeImagenView(items, holder.imageView);
         holder.modulo.setText(items.getModulo());
@@ -69,6 +72,49 @@ public class AdapterRecyclerMenu extends RecyclerView.Adapter<MenuInterface> {
         holder.vistobueno.setText(items.getVistoBueno());
 
         holder.presio.setText(items.getPresio());
+
+        holder.item_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.item_menu:
+                        PopupMenu popup = new PopupMenu(context, v);
+                        popup.getMenuInflater().inflate(R.menu.clipboard_popup, popup.getMenu());
+                        popup.show();
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.install:
+                                        //Or Some other code you want to put here.. This is just an example.
+                                        Toast.makeText(context, " Install Clicked at position " + " : " + position, Toast.LENGTH_LONG).show();
+                                        break;
+                                    case R.id.addtowishlist:
+                                        Toast.makeText(context, "Add to Wish List Clicked at position " + " : " + position, Toast.LENGTH_LONG).show();
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+
+                                return true;
+                            }
+                        });
+
+
+                        break;
+                }
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, Accounts.class));
+            }
+
+        });
+
 
     }
 

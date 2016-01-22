@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:layout_margin="5dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="abako.dito.co.sinmovil.Activities.ActMenu"
     tools:showIn="@layout/layout_menu">
 
     <android.support.v7.widget.RecyclerView

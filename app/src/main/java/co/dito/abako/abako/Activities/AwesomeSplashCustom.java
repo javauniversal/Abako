@@ -57,9 +57,19 @@ public abstract class AwesomeSplashCustom extends AppCompatActivity {
         mydb = new DBHelper(this);
 
         if (mydb.getIntro()){
-            startActivity(new Intent(AwesomeSplashCustom.this, ActLoginNegocio.class));
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            finish();
+
+            int idNegocio = mydb.ultimoRegistro("negocio");
+
+            if (idNegocio != 0){
+                startActivity(new Intent(AwesomeSplashCustom.this, ActLoginUsuario.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            }else {
+                startActivity(new Intent(AwesomeSplashCustom.this, ActLoginNegocio.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            }
+
         }
 
         mConfigSplash = new ConfigSplash();

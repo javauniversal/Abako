@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.dito.abako.abako.Entities.ListAgencia;
@@ -85,6 +86,72 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     //endregion
 
+    public List<LoginResponce> selectNegocios(){
+
+        ArrayList<LoginResponce> listNegocio = new ArrayList<>();
+
+        String sql = "SELECT * FROM negocio ORDER BY CodigoNegocio ASC";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+
+            LoginResponce loginResponce = new LoginResponce();
+
+            do {
+
+                loginResponce.setCodigoNegocio(cursor.getString(0));
+                loginResponce.setNegocio(cursor.getString(1));
+                loginResponce.setUrlImg(cursor.getString(2));
+                loginResponce.setListAgencia(listAgencias(cursor.getString(0)));
+                loginResponce.setListIp(listIps(cursor.getString(0)));
+
+                listNegocio.add(loginResponce);
+            } while(cursor.moveToNext());
+        }
+
+        return listNegocio;
+
+    }
+
+    public List<ListIp> listIps(String idNegocio){
+        ArrayList<ListIp> listIps = new ArrayList<>();
+        String sql = "SELECT key, value FROM ip WHERE idnegocio = "+idNegocio+" ";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+
+            do {
+                ListIp listIp = new ListIp();
+                listIp.setKey(cursor.getString(0));
+                listIp.setValue(cursor.getString(1));
+
+                listIps.add(listIp);
+            } while(cursor.moveToNext());
+        }
+
+        return listIps;
+    }
+
+    public List<ListAgencia> listAgencias(String idNegocio){
+        ArrayList<ListAgencia> listAgencias = new ArrayList<>();
+        String sql = "SELECT * FROM agencia WHERE idnegocio = "+idNegocio+" ORDER BY value ASC";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+
+            do {
+                ListAgencia listAgencia = new ListAgencia();
+                listAgencia.setKey(cursor.getString(0));
+                listAgencia.setValue(cursor.getString(1));
+                listAgencia.setIdNegocio(cursor.getString(2));
+
+                listAgencias.add(listAgencia);
+            } while(cursor.moveToNext());
+        }
+
+        return listAgencias;
+    }
+
     //region Insertar Agencias..
     public boolean insertAgencias(List<ListAgencia> data){
 
@@ -95,7 +162,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
             for(int f = 0; f < data.size(); f++) {
                 try {
-                    valueAdicion.put("key", data.get(f).getValue());
+                    valueAdicion.put("key", data.get(f).getKey());
                     valueAdicion.put("value", data.get(f).getValue());
                     valueAdicion.put("idnegocio", idNegocio);
 
@@ -120,10 +187,10 @@ public class DBHelper extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             int idNegocio = ultimoRegistro("negocio");
 
-            for(int f = 0; f < data.size(); f++) {
+            for(int i = 0; i < data.size(); i++) {
                 try {
-                    valueAdicion.put("key", data.get(f).getValue());
-                    valueAdicion.put("value", data.get(f).getValue());
+                    valueAdicion.put("key", data.get(i).getKey());
+                    valueAdicion.put("value", data.get(i).getValue());
                     valueAdicion.put("idnegocio", idNegocio);
 
                     db.insert("ip", null, valueAdicion);

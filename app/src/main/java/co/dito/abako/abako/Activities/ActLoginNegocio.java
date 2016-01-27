@@ -13,7 +13,6 @@ import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
@@ -35,15 +34,12 @@ import co.dito.abako.abako.DataBase.DBHelper;
 import co.dito.abako.abako.Entities.LoginResponce;
 import co.dito.abako.abako.R;
 
-public class ActLoginNegocio extends validateEditText {
+public class ActLoginNegocio extends AvtivityBase {
 
     @InjectView(R.id.btnConfigurar)
     Button btnConfigurar;
     MaterialEditText negocio;
     MaterialEditText password;
-    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
-    private long mBackPressed;
-    RequestQueue requestQueue;
     private CoordinatorLayout coordinatorLayout;
     private DBHelper mydb;
 
@@ -71,7 +67,7 @@ public class ActLoginNegocio extends validateEditText {
                     password.setError("Campo requerido");
                     password.requestFocus();
                 }else {
-                    enviarPedido();
+                    validateNegocio();
                 }
             }
         });
@@ -79,7 +75,7 @@ public class ActLoginNegocio extends validateEditText {
     }
 
     //region Logiar Usuario + Respuesta
-    public void enviarPedido(){
+    public void validateNegocio(){
 
         String url = String.format("%1$s%2$s", getString(R.string.url_base),"LoginNegocio");
         requestQueue = Volley.newRequestQueue(this);
@@ -155,33 +151,6 @@ public class ActLoginNegocio extends validateEditText {
         }else {
             Snackbar.make(coordinatorLayout, "Negocio/Password incorrectos", Snackbar.LENGTH_LONG).setAction("Action", null).show();
         }
-    }
-    //endregion
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (requestQueue != null)
-            requestQueue.cancelAll("");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (requestQueue != null)
-            requestQueue.cancelAll("");
-    }
-
-    //region Retroceder
-    @Override
-    public void onBackPressed() {
-
-        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
-            super.onBackPressed();
-            return;
-        } else { Toast.makeText(getBaseContext(), "Pulse otra vez para salir", Toast.LENGTH_SHORT).show(); }
-
-        mBackPressed = System.currentTimeMillis();
     }
     //endregion
 

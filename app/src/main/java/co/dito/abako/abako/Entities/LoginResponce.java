@@ -82,4 +82,8 @@ public class LoginResponce {
         ListIp = listIp;
     }
 
+    @Override
+    public String toString() {
+        return Negocio;
+    }
 }

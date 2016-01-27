@@ -5,10 +5,20 @@ import com.google.gson.annotations.SerializedName;
 public class ListAgencia {
 
     @SerializedName("Key")
-    public String Key;
+    private String Key;
 
     @SerializedName("Value")
-    public String Value;
+    private String Value;
+
+    private String idNegocio;
+
+    public String getIdNegocio() {
+        return idNegocio;
+    }
+
+    public void setIdNegocio(String idNegocio) {
+        this.idNegocio = idNegocio;
+    }
 
     public String getKey() {
         return Key;
@@ -26,4 +36,8 @@ public class ListAgencia {
         Value = value;
     }
 
+    @Override
+    public String toString() {
+        return Value;
+    }
 }

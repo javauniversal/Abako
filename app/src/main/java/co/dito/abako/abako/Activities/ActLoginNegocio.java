@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -81,10 +82,10 @@ public class ActLoginNegocio extends AvtivityBase {
         requestQueue = Volley.newRequestQueue(this);
 
         try {
-
+            String date = (DateFormat.format("dd/MM/yyyy", new java.util.Date()).toString());
             HashMap<String, Object> postParameters = new HashMap<>();
             postParameters.put("Negocio", negocio.getText().toString().trim());
-            postParameters.put("Fecha", "");
+            postParameters.put("Fecha", date);
             postParameters.put("Password", password.getText().toString().trim());
             postParameters.put("App", "ABKMOV");
             String jsonParameters = new Gson().toJson(postParameters);

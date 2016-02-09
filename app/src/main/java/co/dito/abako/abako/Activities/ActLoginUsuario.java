@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +40,6 @@ import butterknife.InjectView;
 import co.dito.abako.abako.DataBase.DBHelper;
 import co.dito.abako.abako.Entities.ListAgencia;
 import co.dito.abako.abako.Entities.LoginResponce;
-import co.dito.abako.abako.Entities.UsuarioResponse;
 import co.dito.abako.abako.R;
 
 public class ActLoginUsuario extends AvtivityBase {
@@ -105,13 +105,15 @@ public class ActLoginUsuario extends AvtivityBase {
 
         try {
 
+            String date = (DateFormat.format("dd/MM/yyyy HH:mm", new java.util.Date()).toString());
+
             HashMap<String, Object> postParameters = new HashMap<>();
             postParameters.put("IdGoogle", "");
             postParameters.put("IdAgencia", idAgencia);
             postParameters.put("Usuario", codeUsu.getText().toString().trim());
             postParameters.put("Password", passUsu.getText().toString().trim());
             postParameters.put("ClaveNotificacion", "");
-            postParameters.put("Fecha", "01/01/2005");
+            postParameters.put("Fecha", date);
 
             String jsonParameters = new Gson().toJson(postParameters);
             JSONObject jsonRootObject = new JSONObject(jsonParameters);
@@ -158,8 +160,11 @@ public class ActLoginUsuario extends AvtivityBase {
     }
 
     private void parceJson(JSONObject response) {
-        Gson gson = new Gson();
-        UsuarioResponse login = gson.fromJson(String.valueOf(response), UsuarioResponse.class);
+        //Gson gson = new Gson();
+        //UsuarioResponse login = gson.fromJson(String.valueOf(response), UsuarioResponse.class);
+        startActivity(new Intent(ActLoginUsuario.this, ActMenu.class));
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        finish();
     }
 
     private void loadeNegocio() {

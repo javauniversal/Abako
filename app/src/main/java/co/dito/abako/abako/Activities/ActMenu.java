@@ -38,12 +38,12 @@ public class ActMenu extends AppCompatActivity {
         //Llamar servicio de usuario
         List<EntMenu> menuList = new ArrayList<EntMenu>();
 
-        menuList.add(new EntMenu(R.drawable.icono1,"Pedidos","Crea tus órdenes de pedidos","40", "10", "$ 100.000"));
-        menuList.add(new EntMenu(R.drawable.icono2,"Facturación","Genera factura de venta","50", "8", "$ 200.000"));
-        menuList.add(new EntMenu(R.drawable.icono3,"Notas Credito","Tramita tu devolución","70", "14", "$ 200.000"));
-        menuList.add(new EntMenu(R.drawable.icono4,"Cartera","Gestion de cuentas por cobrar","10", "19", "$ 200.000"));
-        menuList.add(new EntMenu(R.drawable.icono5,"Entregas","Controla tus pedidos","30","10", "$ 400.000"));
-        menuList.add(new EntMenu(R.drawable.icono6,"Proveedores","Administrar tu cliente","78","11", "$ 100.000"));
+        menuList.add(new EntMenu(R.mipmap.ic_pedidos,"Pedidos","Crea tus órdenes de pedidos","40", "10", "$ 100.000"));
+        menuList.add(new EntMenu(R.mipmap.ic_facturacion,"Facturación","Genera factura de venta","50", "8", "$ 200.000"));
+        menuList.add(new EntMenu(R.mipmap.ic_notas,"Notas Credito","Tramita tu devolución","70", "14", "$ 200.000"));
+        menuList.add(new EntMenu(R.mipmap.ic_cartera,"Cartera","Gestion de cuentas por cobrar","10", "19", "$ 200.000"));
+        menuList.add(new EntMenu(R.mipmap.ic_entregas, "Entregas","Controla tus pedidos","30","10", "$ 400.000"));
+        menuList.add(new EntMenu(R.mipmap.ic_proveedores,"Proveedores","Administrar tu cliente","78","11", "$ 100.000"));
 
         setEntMenuStatic(menuList);
 

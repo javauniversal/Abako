@@ -1,6 +1,5 @@
 package co.dito.abako.abako.Activities;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -26,13 +25,9 @@ import com.viksaa.sssplash.lib.model.ConfigSplash;
 import com.viksaa.sssplash.lib.utils.UIUtil;
 import com.viksaa.sssplash.lib.utils.ValidationUtil;
 
-import co.dito.abako.abako.DataBase.DBHelper;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
-/**
- * Created by servintesas on 5/12/15.
- */
 public abstract class AwesomeSplashCustom extends AppCompatActivity {
 
     private RelativeLayout mRlReveal;
@@ -44,7 +39,6 @@ public abstract class AwesomeSplashCustom extends AppCompatActivity {
     private ConfigSplash mConfigSplash;
     private boolean hasAnimationStarted = false;
     private int pathOrLogo = 0;
-    private DBHelper mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,24 +47,6 @@ public abstract class AwesomeSplashCustom extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
-
-        mydb = new DBHelper(this);
-
-        if (mydb.getIntro()){
-
-            int idNegocio = mydb.ultimoRegistro("negocio");
-
-            if (idNegocio != 0){
-                startActivity(new Intent(AwesomeSplashCustom.this, ActLoginUsuario.class));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                finish();
-            }else {
-                startActivity(new Intent(AwesomeSplashCustom.this, ActLoginNegocio.class));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                finish();
-            }
-
-        }
 
         mConfigSplash = new ConfigSplash();
         initSplash(mConfigSplash);

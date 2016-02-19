@@ -39,6 +39,7 @@
         <activity
             android:name=".Activities.Settings"
             android:label="@string/title_activity_act_menu" />
+
     </application>
 
 </manifest>

@@ -17,8 +17,6 @@ import static co.dito.abako.abako.Entities.EntMenu.setEntMenuStatic;
 
 public class ActMenu extends AppCompatActivity {
 
-    private RecyclerView recycler;
-    private RecyclerView.Adapter adapter;
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
     private long mBackPressed;
 
@@ -28,7 +26,7 @@ public class ActMenu extends AppCompatActivity {
         setContentView(R.layout.layout_menu);
 
         // Obtener el Recycler
-        recycler = (RecyclerView) findViewById(R.id.recyclerViewTurnos);
+        RecyclerView recycler = (RecyclerView) findViewById(R.id.recyclerViewTurnos);
         recycler.setHasFixedSize(true);
 
         // Usar un administrador para LinearLayout
@@ -36,7 +34,7 @@ public class ActMenu extends AppCompatActivity {
         recycler.setLayoutManager(lManager);
 
         //Llamar servicio de usuario
-        List<EntMenu> menuList = new ArrayList<EntMenu>();
+        List<EntMenu> menuList = new ArrayList<>();
 
         menuList.add(new EntMenu(R.mipmap.ic_pedidos,"Pedidos","Crea tus órdenes de pedidos","40", "10", "$ 100.000"));
         menuList.add(new EntMenu(R.mipmap.ic_facturacion,"Facturación","Genera factura de venta","50", "8", "$ 200.000"));
@@ -47,8 +45,7 @@ public class ActMenu extends AppCompatActivity {
 
         setEntMenuStatic(menuList);
 
-
-        adapter = new AdapterRecyclerMenu(ActMenu.this);
+        RecyclerView.Adapter adapter = new AdapterRecyclerMenu(ActMenu.this);
         recycler.setAdapter(adapter);
 
     }

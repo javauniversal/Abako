@@ -60,7 +60,6 @@ public class ActLoginNegocio extends AvtivityBase {
         btnConfigurar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (validate(negocio.getText().toString().trim())){
                     negocio.setError("Campo requerido");
                     negocio.requestFocus();

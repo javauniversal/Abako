@@ -1,7 +1,7 @@
 package co.dito.abako.abako.Adapters;
 
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,11 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.Toast;
-
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
 import co.dito.abako.abako.Activities.Accounts;
 import co.dito.abako.abako.Entities.EntMenu;
@@ -26,24 +21,12 @@ import static co.dito.abako.abako.Entities.EntMenu.getEntMenuStatic;
 
 public class AdapterRecyclerMenu extends RecyclerView.Adapter<MenuInterface> {
 
-    private Context context;
-    private ImageLoader imageLoader1;
-    private DisplayImageOptions options1;
-    private ImageLoadingListener listener;
+    private Activity context;
 
-    public AdapterRecyclerMenu(Context context) {
+    public AdapterRecyclerMenu(Activity context) {
         super();
         this.context = context;
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).build();
-        imageLoader1 = ImageLoader.getInstance();
-        imageLoader1.init(config);
-
-        //Setup options for ImageLoader so it will handle caching for us.
-        options1 = new DisplayImageOptions.Builder()
-                .cacheInMemory()
-                .cacheOnDisc()
-                .build();
     }
 
     @Override
@@ -51,6 +34,7 @@ public class AdapterRecyclerMenu extends RecyclerView.Adapter<MenuInterface> {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_menu, parent, false);
         return new MenuInterface(v, context);
+
     }
 
     @Override
@@ -61,7 +45,7 @@ public class AdapterRecyclerMenu extends RecyclerView.Adapter<MenuInterface> {
     @Override
     public void onBindViewHolder(MenuInterface holder, final int position) {
 
-        EntMenu items = getEntMenuStatic().get(position);
+        final EntMenu items = getEntMenuStatic().get(position);
         holder.imageView.setImageResource(items.getImageView());
         holder.modulo.setText(items.getModulo());
         holder.descripcion.setText(items.getDescripcion());
@@ -86,6 +70,7 @@ public class AdapterRecyclerMenu extends RecyclerView.Adapter<MenuInterface> {
                                         //Or Some other code you want to put here.. This is just an example.
                                         Toast.makeText(context, " Install Clicked at position " + " : " + position, Toast.LENGTH_LONG).show();
                                         break;
+
                                     case R.id.addtowishlist:
                                         Toast.makeText(context, "Add to Wish List Clicked at position " + " : " + position, Toast.LENGTH_LONG).show();
                                         break;
@@ -98,21 +83,45 @@ public class AdapterRecyclerMenu extends RecyclerView.Adapter<MenuInterface> {
                             }
                         });
 
-
                         break;
+
                 }
             }
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, Accounts.class));
+
+                switch (items.getModulo()){
+                    case "Pedidos":
+                        Toast.makeText(context, "En construcción", Toast.LENGTH_LONG).show();
+                        break;
+
+                    case "Facturación":
+                        Toast.makeText(context, "En construcción", Toast.LENGTH_LONG).show();
+                        break;
+
+                    case "Notas Credito":
+                        Toast.makeText(context, "En construcción", Toast.LENGTH_LONG).show();
+                        break;
+
+                    case "Cartera":
+                        context.startActivity(new Intent(context, Accounts.class));
+                        context.finish();
+                        break;
+
+                    case "Entregas":
+                        Toast.makeText(context, "En construcción", Toast.LENGTH_LONG).show();
+                        break;
+
+                    case "Proveedores":
+                        Toast.makeText(context, "En construcción", Toast.LENGTH_LONG).show();
+                        break;
+                }
             }
 
         });
-
-
     }
 
     @Override

@@ -31,6 +31,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +39,10 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import co.dito.abako.abako.DataBase.DBHelper;
+import co.dito.abako.abako.Entities.Empleado;
 import co.dito.abako.abako.Entities.ListAgencia;
 import co.dito.abako.abako.Entities.LoginResponce;
+import co.dito.abako.abako.Entities.ResponseEmpleado;
 import co.dito.abako.abako.R;
 
 public class ActLoginUsuario extends AvtivityBase {
@@ -63,6 +66,10 @@ public class ActLoginUsuario extends AvtivityBase {
     private List<LoginResponce> loginRes;
     private String idAgencia;
     private String URLNegocio;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,24 +81,44 @@ public class ActLoginUsuario extends AvtivityBase {
         mydb = new DBHelper(this);
         ButterKnife.inject(this);
 
+        Empleado empleado = mydb.recuperarInfoEmpleado();
+
+        if (empleado.getId_empleado() > 0) {
+            codeUsu.setText(empleado.getNombre_empleado());
+            codeUsu.setEnabled(false);
+            passUsu.setFocusable(true);
+        }
+
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (validate(codeUsu.getText().toString().trim())){
+                if (validate(codeUsu.getText().toString().trim())) {
                     codeUsu.setError("Campo requerido");
                     codeUsu.requestFocus();
-                }else if (validate(passUsu.getText().toString().trim())) {
+                } else if (validate(passUsu.getText().toString().trim())) {
                     passUsu.setError("Campo requerido");
                     passUsu.requestFocus();
-                }else {
-                    validateUsuario();
+                } else {
+                    switch (mydb.selectAgenciasEmp(Integer.parseInt(idAgencia))) {
+                        case "1":
+                            // Si esta llena la tabla pero no lo encontro.
+                            Toast.makeText(ActLoginUsuario.this, "El usuario no esta registrado a la agencia seleccionada.", Toast.LENGTH_LONG).show();
+                            break;
+                        case "2":
+                            // Encontro el registro.
+                            startActivity(new Intent(ActLoginUsuario.this, ActMenu.class));
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                            finish();
+                            break;
+                        case "3":
+                            // No esta llena y no lo encontro.
+                            validateUsuario();
+                            break;
+                    }
                 }
-
-                /*startActivity(new Intent(ActLoginUsuario.this, ActMenu.class));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                finish();*/
             }
+
         });
 
         loadeNegocio();
@@ -100,12 +127,12 @@ public class ActLoginUsuario extends AvtivityBase {
 
     private void validateUsuario() {
 
-        String url = String.format("%1$s%2$s", URLNegocio,"/LoginUsuario");
+        String url = String.format("%1$s%2$s", URLNegocio, "/LoginUsuario");
         requestQueue = Volley.newRequestQueue(this);
 
         try {
 
-            String date = (DateFormat.format("dd/MM/yyyy HH:mm", new java.util.Date()).toString());
+            String date = (DateFormat.format("dd/MM/yyyy HH:mm", new Date()).toString());
 
             HashMap<String, Object> postParameters = new HashMap<>();
             postParameters.put("IdGoogle", "");
@@ -132,21 +159,21 @@ public class ActLoginUsuario extends AvtivityBase {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                                Toast.makeText(ActLoginUsuario.this, "Error de tiempo de espera",Toast.LENGTH_LONG).show();
+                                Toast.makeText(ActLoginUsuario.this, "Error de tiempo de espera", Toast.LENGTH_LONG).show();
                             } else if (error instanceof AuthFailureError) {
-                                Toast.makeText(ActLoginUsuario.this, "Error Servidor",Toast.LENGTH_LONG).show();
+                                Toast.makeText(ActLoginUsuario.this, "Error Servidor", Toast.LENGTH_LONG).show();
                             } else if (error instanceof ServerError) {
-                                Toast.makeText(ActLoginUsuario.this, "Server Error",Toast.LENGTH_LONG).show();
+                                Toast.makeText(ActLoginUsuario.this, "Server Error", Toast.LENGTH_LONG).show();
                             } else if (error instanceof NetworkError) {
-                                Toast.makeText(ActLoginUsuario.this, "Error de red",Toast.LENGTH_LONG).show();
+                                Toast.makeText(ActLoginUsuario.this, "Error de red", Toast.LENGTH_LONG).show();
                             } else if (error instanceof ParseError) {
-                                Toast.makeText(ActLoginUsuario.this, "Error al serializar los datos",Toast.LENGTH_LONG).show();
+                                Toast.makeText(ActLoginUsuario.this, "Error al serializar los datos", Toast.LENGTH_LONG).show();
                             }
                         }
-                    }){
+                    }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
+                    HashMap<String, String> headers = new HashMap<>();
                     headers.put("Content-Type", "application/json; charset=utf-8");
                     return headers;
                 }
@@ -157,19 +184,49 @@ public class ActLoginUsuario extends AvtivityBase {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
 
     private void parceJson(JSONObject response) {
-        //Gson gson = new Gson();
-        //UsuarioResponse login = gson.fromJson(String.valueOf(response), UsuarioResponse.class);
-        startActivity(new Intent(ActLoginUsuario.this, ActMenu.class));
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        finish();
+
+        Gson gson = new Gson();
+        ResponseEmpleado login = gson.fromJson(String.valueOf(response), ResponseEmpleado.class);
+
+        switch (login.getMensajesList().get(0).getEst()) {
+            case -1:
+                // -1 - Error
+                Toast.makeText(this, login.getMensajesList().get(0).getMsg(), Toast.LENGTH_LONG).show();
+                break;
+            case 0:
+                // 0 - Advertencia
+                Toast.makeText(this, login.getMensajesList().get(0).getMsg(), Toast.LENGTH_LONG).show();
+
+                startActivity(new Intent(ActLoginUsuario.this, ActMenu.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+
+                break;
+            case 1:
+                // 1 - OK
+                if (mydb.insertEmpleado(login) && mydb.insertAgenciaEmple(login.getListAgencias()) && mydb.insertAlmacenEmple(login.getAlmacenesList())
+                        && mydb.insertConfiguracionEmple(login.getConfiguracionesList())) {
+
+                    startActivity(new Intent(ActLoginUsuario.this, ActMenu.class));
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    finish();
+                } else {
+                    Toast.makeText(this, "Problemas al guardar en la base de datos.", Toast.LENGTH_LONG).show();
+                }
+
+                break;
+
+        }
+
     }
 
     private void loadeNegocio() {
 
-        new AsyncTask<String[], Long, Long>(){
+        new AsyncTask<String[], Long, Long>() {
             @Override
             protected Long doInBackground(String[]... params) {
 
@@ -178,15 +235,17 @@ public class ActLoginUsuario extends AvtivityBase {
                 return null;
             }
 
-            protected void onPreExecute() { }
+            protected void onPreExecute() {
+            }
 
             @Override
-            public void onProgressUpdate(Long... value) { }
+            public void onProgressUpdate(Long... value) {
+            }
 
             @Override
-            protected void onPostExecute(Long result){
+            protected void onPostExecute(Long result) {
 
-                ArrayAdapter<LoginResponce> dataNegocio = new ArrayAdapter<LoginResponce>(ActLoginUsuario.this, R.layout.item_txt_spinner, loginRes);
+                ArrayAdapter<LoginResponce> dataNegocio = new ArrayAdapter<>(ActLoginUsuario.this, R.layout.item_txt_spinner, loginRes);
                 spinnerNegocio.setAdapter(dataNegocio);
                 spinnerNegocio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -196,6 +255,7 @@ public class ActLoginUsuario extends AvtivityBase {
 
                         loadeAgencias(position);
                     }
+
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
 
@@ -210,13 +270,14 @@ public class ActLoginUsuario extends AvtivityBase {
 
     private void loadeAgencias(final int positionE) {
 
-        ArrayAdapter<ListAgencia> dataAgencia = new ArrayAdapter<ListAgencia>(ActLoginUsuario.this, R.layout.item_txt_spinner, loginRes.get(positionE).getListAgencia());
+        ArrayAdapter<ListAgencia> dataAgencia = new ArrayAdapter<>(ActLoginUsuario.this, R.layout.item_txt_spinner, loginRes.get(positionE).getListAgencia());
         spinnerAgencias.setAdapter(dataAgencia);
         spinnerAgencias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 idAgencia = loginRes.get(positionE).getListAgencia().get(position).getKey();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -243,5 +304,6 @@ public class ActLoginUsuario extends AvtivityBase {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

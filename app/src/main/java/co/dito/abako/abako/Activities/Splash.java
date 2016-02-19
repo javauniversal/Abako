@@ -32,12 +32,12 @@ public class Splash extends AwesomeSplashCustom {
         configSplash.setAnimLogoSplashTechnique(Techniques.DropOut); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
         //Customize Title
-        configSplash.setTitleSplash("Abako");
+        /*configSplash.setTitleSplash("Abako");
         configSplash.setTitleTextColor(R.color.colorPrimary);
         configSplash.setTitleTextSize(41f); //float value
         configSplash.setAnimTitleDuration(3000);
-        configSplash.setAnimTitleTechnique(Techniques.Tada);
-        configSplash.setTitleFont("fonts/Roboto-Bold.ttf"); //provide string to your font located in assets/fonts/
+        configSplash.setAnimTitleTechnique(Techniques.Tada);*/
+        //configSplash.setTitleFont("fonts/Roboto-Bold.ttf"); //provide string to your font located in assets/fonts/
 
     }
 
@@ -45,11 +45,17 @@ public class Splash extends AwesomeSplashCustom {
     public void animationsFinished() {
 
         DBHelper mydb = new DBHelper(Splash.this);
-        mydb.insertIntro("Inicio_sesion");
+        int idNegocio = mydb.ultimoRegistro("negocio");
 
-        startActivity(new Intent(Splash.this, ActLoginNegocio.class));
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        finish();
+        if (idNegocio != 0){
+            startActivity(new Intent(Splash.this, ActLoginUsuario.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            finish();
+        }else {
+            startActivity(new Intent(Splash.this, ActLoginNegocio.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            finish();
+        }
 
     }
 

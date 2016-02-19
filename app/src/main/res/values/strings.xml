@@ -20,6 +20,8 @@
 
     <string name="url_base">http://181.143.94.74/ServicioCODI/ServicioCODI.svc/</string>
     <string name="title_activity_ddffgv">Ddffgv</string>
+    <string name="agencias">Agencias</string>
+    <string name="negocio_">Negocio</string>
     <!-- <string name="url_base">http://172.20.32.75:2080/SCSAPP/Services/Authentication.svc/</string> -->
 
 </resources>
